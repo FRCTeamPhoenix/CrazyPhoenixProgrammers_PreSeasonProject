@@ -1,3 +1,6 @@
-## CrazyPhoenixProgrammers_PreSeasonProject
+# CrazyPhoenixProgrammers_PreSeasonProject
 
-# Goals
+## Goals
+
+* item 1
+* item 2
