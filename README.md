@@ -1,6 +1,5 @@
 # CrazyPhoenixProgrammers_PreSeasonProject
 
-## Goals
+## What Are We doing
 
-* item 1
-* item 2
+* **We Still Don't Know For Sure**
