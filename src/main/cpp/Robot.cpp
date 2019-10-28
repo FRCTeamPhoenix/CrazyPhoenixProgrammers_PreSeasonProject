@@ -17,6 +17,9 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   m_chooser.AddOption("My Auto", &m_myAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  std::thread visionThread(m_camera.VisionThread);
+  visionThread.detach();
 }
 
 /**
@@ -80,7 +83,9 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+
+}
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
