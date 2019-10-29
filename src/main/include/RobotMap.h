@@ -23,14 +23,3 @@
 // number and the module. For example you with a rangefinder:
 // constexpr int kRangeFinderPort = 1;
 // constexpr int kRangeFinderModule = 1;
-
-const int SOLENOID_HIGH_GEAR = 4;
-const int SOLENOID_LOW_GEAR = 5;
-const int PCM_BALL_MANIPULATOR_LEFT = 0;
-const int PCM_BALL_MANIPULATOR_RIGHT = 2;
-
-const int PCM_BALL_MANIPULATOR_LEFT2 = 1;
-const int PCM_BALL_MANIPULATOR_RIGHT2 = 6;
-
-
-const int PCM_CAN_ID = 11;

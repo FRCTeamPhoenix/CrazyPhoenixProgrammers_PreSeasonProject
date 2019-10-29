@@ -6,14 +6,18 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
-#include "PCM.h"
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+ExampleSubsystem Robot::m_subsystem;
 OI Robot::m_oi;
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
+  m_chooser.AddOption("My Auto", &m_myAuto);
+  frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -46,13 +50,32 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
+  // std::string autoSelected = frc::SmartDashboard::GetString(
+  //     "Auto Selector", "Default");
+  // if (autoSelected == "My Auto") {
+  //   m_autonomousCommand = &m_myAuto;
+  // } else {
+  //   m_autonomousCommand = &m_defaultAuto;
+  // }
+
+  m_autonomousCommand = m_chooser.GetSelected();
+
+  if (m_autonomousCommand != nullptr) {
+    m_autonomousCommand->Start();
+  }
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
-    PCMHandler::getInstance()->turnOn(); 
-    PCMHandler::getInstance()->closeManipulator(); 
+  // This makes sure that the autonomous stops running when
+  // teleop starts running. If you want the autonomous to
+  // continue until interrupted by another command, remove
+  // this line or comment it out.
+  if (m_autonomousCommand != nullptr) {
+    m_autonomousCommand->Cancel();
+    m_autonomousCommand = nullptr;
+  }
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
