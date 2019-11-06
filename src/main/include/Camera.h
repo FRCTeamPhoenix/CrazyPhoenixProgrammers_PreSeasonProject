@@ -8,12 +8,9 @@
 class Camera {
     public:
         Camera();
-        void VisionThread(int resolutionX, int resolutionY);
+        void StartThread();
         cs::UsbCamera getCamera();
 
     private:
-        cs::UsbCamera camera;
-        cs::CvSink cvSink;
-        cs::CvSource outputStreamStd;
-        cv::Mat source;
+        static void VisionThread();
 };

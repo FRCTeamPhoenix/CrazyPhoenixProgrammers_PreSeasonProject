@@ -7,8 +7,6 @@
 
 #include "Robot.h"
 
-#include <thread>
-
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -19,9 +17,6 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   m_chooser.AddOption("My Auto", &m_myAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-
-  std::thread visionThread(m_camera.VisionThread, 640 / 4, 480 / 4);
-  visionThread.detach();
 }
 
 /**

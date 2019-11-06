@@ -4,11 +4,12 @@
 Camera::Camera() {
 }
 
-void Camera::VisionThread(int resolutionX, int resolutionY) {
-    camera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
-    camera.SetResolution(resolutionX, resolutionY);
-    cvSink = frc::CameraServer::GetInstance()->GetVideo();
-    outputStreamStd = frc::CameraServer::GetInstance()->PutVideo("Gray", resolutionX, resolutionY);
+void Camera::VisionThread() {
+    cs::UsbCamera camera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+    camera.SetResolution(640 / 4, 480 / 4);
+    cs::CvSink cvSink = frc::CameraServer::GetInstance()->GetVideo();
+    cs::CvSource outputStreamStd = frc::CameraServer::GetInstance()->PutVideo("Gray", 640 / 4, 480 / 4);
+    cv::Mat source;
 
     while (true) {
         cvSink.GrabFrame(source);
@@ -16,6 +17,7 @@ void Camera::VisionThread(int resolutionX, int resolutionY) {
     }
 }
 
-cs::UsbCamera Camera::getCamera() {
-    return camera;
+void Camera::StartThread() {
+    std::thread visionThread(VisionThread);
+    visionThread.detach();
 }
