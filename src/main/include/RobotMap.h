@@ -28,3 +28,14 @@ const int TALON_FRONT_LEFT = 1;
 const int TALON_FRONT_RIGHT = 2;
 const int TALON_BACK_LEFT = 3;
 const int TALON_BACK_RIGHT = 4;
+
+const int SOLENOID_HIGH_GEAR = 4;
+const int SOLENOID_LOW_GEAR = 5;
+const int PCM_BALL_MANIPULATOR_LEFT = 0;
+const int PCM_BALL_MANIPULATOR_RIGHT = 2;
+
+const int PCM_BALL_MANIPULATOR_LEFT2 = 1;
+const int PCM_BALL_MANIPULATOR_RIGHT2 = 6;
+
+
+const int PCM_CAN_ID = 11;

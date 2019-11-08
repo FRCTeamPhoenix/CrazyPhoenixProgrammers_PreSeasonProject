@@ -1,4 +1,5 @@
 #include "subsystems/TankSubsystem.h"
+#include "PCM.h"
 
 TankSubsystem::TankSubsystem() : frc::Subsystem("TankSubsystem") {}
 
@@ -26,4 +27,11 @@ void TankSubsystem::init(){
 
 void TankSubsystem::setSpeed(const double& left, const double& right){
     m_drive.TankDrive(left, right);
+}
+void TankSubsystem::setHighGear() {
+    PCMHandler::getInstance()->setHighGear();
+}
+
+void TankSubsystem::setLowGear(){
+    PCMHandler::getInstance()->setLowGear();
 }

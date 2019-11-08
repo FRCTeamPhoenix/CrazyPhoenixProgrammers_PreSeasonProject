@@ -23,6 +23,10 @@ class TankSubsystem : public frc::Subsystem {
 
         void setSpeed(const double& left, const double& right);
 
+        void setHighGear();
+        
+        void setLowGear();
+
     private:
         TankSubsystem();
         const int TIMEOUT = 10;
