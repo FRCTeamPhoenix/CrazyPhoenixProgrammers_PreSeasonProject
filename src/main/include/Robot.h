@@ -16,6 +16,8 @@
 #include "commands/MyAutoCommand.h"
 #include "subsystems/ExampleSubsystem.h"
 
+#include "Camera.h"
+
 class Robot : public frc::TimedRobot {
  public:
   static ExampleSubsystem m_subsystem;
@@ -38,4 +40,6 @@ class Robot : public frc::TimedRobot {
   ExampleCommand m_defaultAuto;
   MyAutoCommand m_myAuto;
   frc::SendableChooser<frc::Command*> m_chooser;
+
+  Camera m_camera;
 };
