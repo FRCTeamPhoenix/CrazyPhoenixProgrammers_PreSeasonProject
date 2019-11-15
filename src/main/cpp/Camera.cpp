@@ -14,9 +14,7 @@ void Camera::VisionThread() {
     while (true) {
         cvSink.GrabFrame(source);
         if(!source.empty())
-        {
             outputStreamStd.PutFrame(source);
-        }
     }
 }
 
