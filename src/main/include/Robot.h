@@ -9,6 +9,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
+#include "commands/DriveJoystick.h"
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "OI.h"
@@ -31,4 +32,5 @@ class Robot : public frc::TimedRobot {
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
+  DriveJoystick m_DriveJoystick;
 };

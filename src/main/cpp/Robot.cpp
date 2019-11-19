@@ -58,7 +58,7 @@ void Robot::TeleopInit() {
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
-  
+  frc::Scheduler::GetInstance()->AddCommand(&m_DriveJoystick);
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
