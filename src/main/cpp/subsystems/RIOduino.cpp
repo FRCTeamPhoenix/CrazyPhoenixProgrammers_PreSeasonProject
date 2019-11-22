@@ -3,18 +3,20 @@
 
 #include <iostream>
 #include <string>
+#include <unistd.h>
 #include <regex>
 
 RIOduino::RIOduino() {
     m_distance = 1;
     m_port = new frc::SerialPort(SERIAL_BAUD_RATE, LIDAR_PORT);
     m_updater = new frc::Timer();
-    m_distances = new int[SLOW_AVERAGE_SIZE];
     m_faverage = 1;
     m_saverage = 1;
+}
 
-    for (int i = 0; i <= m_distances.length; i++)
-        m_distances[i] = 0;
+RIOduino::~RIOduino() {
+    delete m_port;
+    delete m_updater;
 }
 
 double RIOduino::getDistanceIn() {
@@ -46,27 +48,41 @@ void RIOduino::start() {
 }
 
 void RIOduino::update() {
-    m_port.WriteString("H");
-    frc::Timer.wait(0.06);
-    std::string revc = m_port.readString();
-    std::cout << revc << "r" << std::endl;
+    m_port->Write("H");
+    sleep(0.06);
+    m_port->Read(m_buffer, MAX_BYTES);
+    std::string recv (m_buffer);
+    // Ask robert if this is okay
+    std::cout << recv << "r" << std::endl;
 
-    int startChar = recv.indexOf('s');
-    int endChar = -1;
+    int startCharIdx = recv.find("s");
+    int endCharIdx = -1;
     
-    if(startChar != -1)
-        endChar = recv.indexOf('\n',startChar);
+    if(startCharIdx != -1)
+        endCharIdx = recv.find("\n", startCharIdx + 1);
     else
         return;
-    if(startChar == -1 || endChar == -1 || startChar > endChar)
+    if(startCharIdx == -1 || endCharIdx == -1 || startCharIdx > endCharIdx)
         return;
     
-    std::string finalString = recv.substring(startChar + 1, endChar - 1);
+    std::string finalString = recv.substr(startCharIdx + 1, endCharIdx - 1);
     std::regex r("[^0-9.]");
-
-    
-    std::string lidar = revc;
+    std::string lidar = recv;
     std::regex_replace(lidar, r, "");
     m_distance = std::stoi(lidar);
+
+    m_distances[m_distCount % 10] = m_distance;
+    m_distCount++;
     
+    int locfaverage = 0;
+    int locsaverage = 0;
+
+    for (int i = 0; i < FAST_AVERAGE_SIZE; i++)
+        locfaverage += m_distances[i];
+    for (int i = 0; i < SLOW_AVERAGE_SIZE; i++)
+        locsaverage += m_distances[i];
+    
+    m_faverage = locfaverage / FAST_AVERAGE_SIZE;
+    m_saverage = locsaverage / SLOW_AVERAGE_SIZE;
+
 }
