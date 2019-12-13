@@ -13,6 +13,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "OI.h"
+#include "Pixy.h"
 
 
 class Robot : public frc::TimedRobot {
@@ -28,9 +29,11 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
-
+  
+  Robot();
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   DriveJoystick m_DriveJoystick;
+  Pixy m_Pixy;
 };

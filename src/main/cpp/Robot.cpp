@@ -13,7 +13,7 @@
 OI Robot::m_oi;
 
 void Robot::RobotInit() {
-
+  m_Pixy.init();
 }
 
 /**
@@ -59,11 +59,14 @@ void Robot::TeleopInit() {
   // continue until interrupted by another command, remove
   // this line or comment it out.
   frc::Scheduler::GetInstance()->AddCommand(&m_DriveJoystick);
+  m_Pixy.getVersion();
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TestPeriodic() {}
+
+Robot::Robot() {}
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
